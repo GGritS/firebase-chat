@@ -1,0 +1,31 @@
+.wrapper {
+  width: 100%;
+  height: 140px;
+  padding: 20px;
+
+  .content {
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+}
+
+.messageInput {
+  resize: none;
+  width: 60%;
+  height: 100%;
+
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px;
+}
+.sendMessageButton {
+  height: 100%;
+  width: 15%;
+
+  font-size: 26px;
+  font-weight: bold;
+}
