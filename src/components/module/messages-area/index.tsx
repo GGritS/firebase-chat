@@ -12,22 +12,25 @@ type MessageType = {
   message: string;
   userId: string;
   userName: string;
+  sendedAT: { seconds: number; nanoseconds: number };
 };
 
 export const MessagesArea: FC = () => {
   const { user } = UserAuth();
 
   const [messages, setMessages] = useState<MessageType[]>([]);
-
   useEffect(() => {
     const getMessages = async () => {
       onSnapshot(collection(db, "messages"), (snapshot) => {
-        const messages: MessageType[] | any = [];
-        snapshot.docs.forEach((doc) => {
-          messages.push({ ...doc.data(), id: doc.id });
-        });
-        setMessages(messages);
-        console.log(messages);
+        const messages = [] as MessageType[];
+        snapshot.forEach((doc: any) =>
+          messages.push({ ...doc.data(), id: doc.id })
+        );
+        const sortedMessages = messages.sort(
+          (a, b) => a.sendedAT.seconds - b.sendedAT.seconds
+        );
+
+        setMessages(sortedMessages);
       });
     };
     getMessages();

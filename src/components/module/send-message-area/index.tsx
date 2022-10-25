@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import { db } from "../../../firebase/firebase";
 import style from "./index.module.scss";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { UserAuth } from "../../../contexts/auth/AuthContext";
 
 export const SendMessageArea: FC = () => {
@@ -16,6 +16,7 @@ export const SendMessageArea: FC = () => {
         userName: user.displayName,
         image: user.photoURL,
         message: message,
+        sendedAT: serverTimestamp(),
       });
     } catch (e) {
       console.error("Error adding document: ", e);
