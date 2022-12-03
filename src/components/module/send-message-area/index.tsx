@@ -3,6 +3,7 @@ import { db } from "../../../firebase/firebase";
 import style from "./index.module.scss";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { UserAuth } from "../../../contexts/auth/AuthContext";
+import { Button } from "@mui/material";
 
 export const SendMessageArea: FC = () => {
   const { user } = UserAuth();
@@ -10,8 +11,9 @@ export const SendMessageArea: FC = () => {
   const [message, setMessage] = useState<string>("");
 
   const sendMessage = async () => {
+    if (message === "") return;
     try {
-      const docRef = await addDoc(collection(db, "messages"), {
+      await addDoc(collection(db, "messages"), {
         userId: user.uid,
         userName: user.displayName,
         image: user.photoURL,
@@ -34,9 +36,13 @@ export const SendMessageArea: FC = () => {
           onChange={(e) => setMessage(e.target.value)}
           className={style.messageInput}
         ></textarea>
-        <button className={style.sendMessageButton} onClick={sendMessage}>
+        <Button
+          variant="contained"
+          className={style.sendMessageButton}
+          onClick={sendMessage}
+        >
           Send message
-        </button>
+        </Button>
       </div>
     </div>
   );

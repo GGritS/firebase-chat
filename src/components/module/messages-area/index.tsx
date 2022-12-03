@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { UserAuth } from "../../../contexts/auth/AuthContext";
 import { db } from "../../../firebase/firebase";
 import { Message } from "../../common/Message";
@@ -15,19 +15,24 @@ type MessageType = {
   sendedAT: { seconds: number; nanoseconds: number };
 };
 
-export const MessagesArea: FC = () => {
+export const MessagesArea: FC = React.memo(() => {
+  const messagesWrap = useRef<HTMLDivElement>(null);
   const { user } = UserAuth();
 
   const [messages, setMessages] = useState<MessageType[]>([]);
   useEffect(() => {
     const getMessages = async () => {
       onSnapshot(collection(db, "messages"), (snapshot) => {
+        // const fechedMessages = snapshot.docs.map((doc) =>
+        //   doc.data()
+        // ) as MessageType[];
+
         const messages = [] as MessageType[];
         snapshot.forEach((doc: any) =>
           messages.push({ ...doc.data(), id: doc.id })
         );
         const sortedMessages = messages.sort(
-          (a, b) => a.sendedAT.seconds - b.sendedAT.seconds
+          (a, b) => a?.sendedAT?.seconds - b?.sendedAT?.seconds
         );
 
         setMessages(sortedMessages);
@@ -35,6 +40,12 @@ export const MessagesArea: FC = () => {
     };
     getMessages();
   }, []);
+
+  useEffect(() => {
+    messagesWrap.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  console.log("render");
 
   return (
     <div className={style.wrapper}>
@@ -51,7 +62,8 @@ export const MessagesArea: FC = () => {
               />
             )
         )}
+        <div ref={messagesWrap} />
       </div>
     </div>
   );
-};
+});

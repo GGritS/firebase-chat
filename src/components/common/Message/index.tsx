@@ -28,7 +28,7 @@ export const Message: FC<MessageProps> = ({
           <img src={image} alt="" className={style.avatar} />
         </div>
         <div className={style.textContent}>
-          <div>{userName}</div>
+          <div className={style.userName}>{userName}</div>
           <div>{messageText}</div>
         </div>
       </div>

@@ -1,0 +1,10 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to right top, #65dfc9, #6cdbeb);
+  height: 100vh;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+}

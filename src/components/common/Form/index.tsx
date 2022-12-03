@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import React, { FC, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -25,7 +26,12 @@ export const Form: FC = () => {
 
   return (
     <div className={style.wrapper}>
-      <button onClick={handleGoogleSignIn}> login with google</button>
+      Login with:
+      <div className={style.loginButtonsWrapper}>
+        <Button variant="contained" onClick={handleGoogleSignIn} fullWidth>
+          login with google
+        </Button>
+      </div>
     </div>
   );
 };

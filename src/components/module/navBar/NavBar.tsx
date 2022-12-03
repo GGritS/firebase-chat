@@ -2,7 +2,7 @@ import React, { FC } from "react";
 
 import Box from "@mui/material/Box";
 
-import { AppBar, IconButton, Toolbar, Typography } from "@mui/material";
+import { AppBar, Button, IconButton, Toolbar, Typography } from "@mui/material";
 
 import { UserAuth } from "../../../contexts/auth/AuthContext";
 
@@ -27,14 +27,18 @@ export const NavBar: FC = () => {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
-          >
-            {/* <MenuIcon /> */}
-          </IconButton>
+          ></IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Chat
           </Typography>
           {user?.displayName ? (
-            <button onClick={handleSignOut}>logout</button>
+            <Button
+              color="secondary"
+              variant="contained"
+              onClick={handleSignOut}
+            >
+              logout
+            </Button>
           ) : (
             <Box>you are not authorized</Box>
           )}
