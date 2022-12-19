@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef, useState } from "react";
 import { UserAuth } from "../../../contexts/auth/AuthContext";
 import { db } from "../../../firebase/firebase";
 import { Message } from "../../common/Message";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, Timestamp } from "firebase/firestore";
 
 import style from "./index.module.scss";
 
@@ -12,7 +12,7 @@ type MessageType = {
   message: string;
   userId: string;
   userName: string;
-  sendedAT: { seconds: number; nanoseconds: number };
+  sendedAT: Timestamp;
 };
 
 export const MessagesArea: FC = React.memo(() => {
@@ -59,6 +59,7 @@ export const MessagesArea: FC = React.memo(() => {
                 messageText={message.message}
                 userName={message.userName}
                 image={message.image}
+                sendedAt={message.sendedAT}
               />
             )
         )}
